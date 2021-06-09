@@ -7,7 +7,7 @@
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion : no-preference) {
+@media ( prefers-reduced-motion : no-preference ) {
 
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -41,10 +41,10 @@
 }
 
 .login-main {
-  height: 572px;
   display: flex;
-  justify-content: center;
+  height: 572px;
   align-items: center;
+  justify-content: center;
 }
 
 .login-box {
