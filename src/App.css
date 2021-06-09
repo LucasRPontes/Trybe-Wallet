@@ -41,8 +41,8 @@
 }
 
 .login-main {
-  display: flex;
   align-items: center;
+  display: flex;
   height: 572px;
   justify-content: center;
 }
