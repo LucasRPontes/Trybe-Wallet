@@ -42,8 +42,8 @@
 
 .login-main {
   display: flex;
-  height: 572px;
   align-items: center;
+  height: 572px;
   justify-content: center;
 }
 
