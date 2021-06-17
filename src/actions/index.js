@@ -16,6 +16,7 @@ export const saveCurrency = (currency) => ({
 
 export const getCurrencyAPI = () => async (dispatch) => {
   const response = await fetchApi();
-  const currency = Object.values(response).filter((element) => element.codein !== 'BRLT');
+  const currency = await Object.values(response)
+    .filter((element) => element.codein !== 'BRLT');
   return dispatch(saveCurrency(currency));
 };

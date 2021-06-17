@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-  currency: {},
+  currency: [],
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
