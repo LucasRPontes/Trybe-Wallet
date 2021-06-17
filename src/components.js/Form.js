@@ -7,7 +7,7 @@ class Form extends React.Component {
     return (
       <div>
         <label htmlFor="value-expense">
-          Valor despesa:
+          Valor despesa
           <input
             id="value-expense"
             type="text"
@@ -21,7 +21,7 @@ class Form extends React.Component {
     return (
       <div>
         <label htmlFor="value-Description">
-          Descrição despesa:
+          Descrição despesa
           <input
             id="value-Description"
             type="text"
@@ -38,7 +38,7 @@ class Form extends React.Component {
     return (
       <div>
         <label htmlFor="currency">
-          Moeda:
+          Moeda
           <select
             id="currency"
           >
@@ -57,15 +57,32 @@ class Form extends React.Component {
     return (
       <div>
         <label htmlFor="pay-method">
-          Moeda:
+          Método de pagamento
           <select
             id="pay-method"
           >
-            <option value="food">Alimentação</option>
-            <option value="leisure">Lazer</option>
-            <option value="job">Trabalho</option>
-            <option value="transport">Transporte</option>
-            <option value="health">Saúde</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
+          </select>
+        </label>
+      </div>
+    );
+  }
+
+  tagExpense() {
+    return (
+      <div>
+        <label htmlFor="pay-method">
+          Tag
+          <select
+            id="pay-method"
+          >
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
       </div>
@@ -81,6 +98,7 @@ class Form extends React.Component {
           {this.valueDescription()}
           {this.currencySelect()}
           {this.payMethodSelect()}
+          {this.tagExpense()}
         </form>
       </div>
     );
