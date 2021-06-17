@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import saveEmail from '../actions';
+import { saveEmail, getCurrencyAPI } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -14,6 +14,11 @@ class Login extends React.Component {
 
     this.searchWords = this.searchWords.bind(this);
     // this.checkButton = this.checkButton.bind(this);
+  }
+
+  componentDidMount() {
+    const { saveApi } = this.props;
+    saveApi();
   }
 
   // checkButton() {
@@ -58,11 +63,12 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   addEmail: (email) => dispatch(saveEmail(email)),
-
+  saveApi: () => dispatch(getCurrencyAPI()),
 });
 
 Login.propTypes = {
   addEmail: PropTypes.func.isRequired,
+  saveApi: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
