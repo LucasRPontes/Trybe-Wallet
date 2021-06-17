@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class Form extends React.Component {
@@ -32,7 +32,7 @@ class Form extends React.Component {
   }
 
   currencySelect() {
-    const { currency } = this.props;
+    // const { currency } = this.props;
     return (
       <div>
         <label htmlFor="currency">
@@ -71,7 +71,7 @@ class Form extends React.Component {
   }
 
   render() {
-    const { currency } = this.props;
+    // const { currency } = this.props;
     return (
       <div>
         <form>
