@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-  currency: [],
+  currencies: [],
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
@@ -7,7 +7,7 @@ const wallet = (state = INITIAL_STATE, action) => {
   case 'SAVE_CURRENCY':
     return {
       ...state,
-      currency: action.payload.currency,
+      currencies: action.payload.currency,
     };
   default:
     return state;

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCurrencyAPI } from '../actions';
 
 class Form extends React.Component {
   constructor() {
@@ -12,11 +11,6 @@ class Form extends React.Component {
     this.currencySelect = this.currencySelect.bind(this);
     this.payMethodSelect = this.payMethodSelect.bind(this);
     this.tagExpense = this.tagExpense.bind(this);
-  }
-
-  componentDidMount() {
-    const { saveApi } = this.props;
-    saveApi();
   }
 
   valueExpense() {
@@ -48,7 +42,8 @@ class Form extends React.Component {
   }
 
   currencySelect() {
-    const { currency } = this.props;
+    const { dinheiro } = this.props;
+    console.log(dinheiro);
     return (
       <div>
         <label htmlFor="currency">
@@ -56,7 +51,7 @@ class Form extends React.Component {
           <select
             id="currency"
           >
-            {currency.map((moeda, index) => (
+            {dinheiro.map((moeda, index) => (
               <option value={ moeda.code } key={ index }>
                 { moeda.code }
               </option>
@@ -119,17 +114,12 @@ class Form extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  saveApi: () => dispatch(getCurrencyAPI()),
-});
-
 const mapStateToProps = (state) => ({
-  currency: state.wallet.currency,
+  dinheiro: state.wallet.currencies,
 });
 
 Form.propTypes = {
-  currency: PropTypes.arrayOf.isRequired,
-  saveApi: PropTypes.func.isRequired,
-};
+  dinheiro: PropTypes.arrayOf,
+}.isRequired;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default connect(mapStateToProps)(Form);
