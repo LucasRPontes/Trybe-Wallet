@@ -33,6 +33,8 @@ class Form extends React.Component {
 
   currencySelect() {
     // const { currency } = this.props;
+    // const result = currency;
+    // console.log(result.map((element) => element));
     return (
       <div>
         <label htmlFor="currency">
@@ -40,7 +42,7 @@ class Form extends React.Component {
           <select
             id="currency"
           >
-            {/* {currency.maps((moeda) => (
+            {/* {currency.map((moeda) => (
               <option value={ moeda.code }>
                 { moeda.code }
               </option>

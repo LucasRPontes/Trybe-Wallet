@@ -25,7 +25,7 @@ class Login extends React.Component {
 
   checkButton() {
     const { email, password } = this.state;
-    const MINIMO_CARACTERES_SENHA = 6;
+    const MINIMO_CARACTERES_SENHA = 5;
     const verifySign = email.includes('@');
     const verifyDotCom = email.includes('.com');
     if (verifySign && verifyDotCom && password.length >= MINIMO_CARACTERES_SENHA) {
