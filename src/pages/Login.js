@@ -10,10 +10,12 @@ class Login extends React.Component {
 
     this.state = {
       email: '',
+      password: '',
+      disableBtn: true,
     };
 
     this.searchWords = this.searchWords.bind(this);
-    // this.checkButton = this.checkButton.bind(this);
+    this.checkButton = this.checkButton.bind(this);
   }
 
   componentDidMount() {
@@ -21,24 +23,24 @@ class Login extends React.Component {
     saveApi();
   }
 
-  // checkButton() {
-  //   const emailInput = document.getElementById('input-email').value;
-  //   const passwordInput = document.getElementById('input-password').value;
-  //   const MINIMO_CARACTERES_SENHA = 6;
-  //   console.log(emailInput);
-  //   console.log(passwordInput);
-  //   // if (passwordInput.value.length < MINIMO_CARACTERES_SENHA) {
-  //   //   alert('Senha Inválida!');
-  //   // }
-  // }
+  checkButton() {
+    const { email, password } = this.state;
+    const MINIMO_CARACTERES_SENHA = 6;
+    const verifySign = email.includes('@');
+    const verifyDotCom = email.includes('.com');
+    if (verifySign && verifyDotCom && password.length >= MINIMO_CARACTERES_SENHA) {
+      this.setState({ disableBtn: false });
+    } else {
+      this.setState({ disableBtn: true });
+    }
+  }
 
-  searchWords(event) {
-    const { value } = event.target;
-    this.setState({ email: value });
+  searchWords(chave, valor) {
+    this.setState({ [chave]: valor });
   }
 
   render() {
-    const { email } = this.state;
+    const { email, disableBtn } = this.state;
     const { addEmail } = this.props;
 
     return (
@@ -47,11 +49,25 @@ class Login extends React.Component {
           <input
             id="input-email"
             data-testid="email-input"
-            onChange={ (event) => this.searchWords(event) }
+            onChange={ (event) => {
+              this.searchWords('email', event.target.value);
+              this.checkButton();
+            } }
           />
-          <input id="input-password" data-testid="password-input" />
+          <input
+            id="input-password"
+            data-testid="password-input"
+            onChange={ (event) => {
+              this.searchWords('password', event.target.value);
+              this.checkButton();
+            } }
+          />
           <Link to="/carteira">
-            <button type="button" onClick={ () => addEmail(email) }>
+            <button
+              type="button"
+              onClick={ () => addEmail(email) }
+              disabled={ disableBtn }
+            >
               Entrar
             </button>
           </Link>
