@@ -18,10 +18,10 @@ class Login extends React.Component {
     this.checkButton = this.checkButton.bind(this);
   }
 
-  componentDidMount() {
-    const { saveApi } = this.props;
-    saveApi();
-  }
+  // componentDidMount() {
+  //   const { saveApi } = this.props;
+  //   saveApi();
+  // }
 
   checkButton() {
     const { email, password } = this.state;
@@ -41,7 +41,7 @@ class Login extends React.Component {
 
   render() {
     const { email, disableBtn } = this.state;
-    const { addEmail } = this.props;
+    const { addEmail, saveApi } = this.props;
 
     return (
       <main className="login-main">
@@ -65,7 +65,10 @@ class Login extends React.Component {
           <Link to="/carteira">
             <button
               type="button"
-              onClick={ () => addEmail(email) }
+              onClick={ () => {
+                addEmail(email);
+                saveApi();
+              } }
               disabled={ disableBtn }
             >
               Entrar
