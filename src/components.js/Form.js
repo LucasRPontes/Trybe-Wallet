@@ -1,17 +1,64 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { getCurrencyAPI, saveExpenses } from '../actions';
 
 class Form extends React.Component {
   constructor() {
     super();
+
+    this.state = {
+      id: -1,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    };
 
     this.valueExpense = this.valueExpense.bind(this);
     this.valueDescription = this.valueDescription.bind(this);
     this.currencySelect = this.currencySelect.bind(this);
     this.payMethodSelect = this.payMethodSelect.bind(this);
     this.tagExpense = this.tagExpense.bind(this);
+    // this.funcaoAtoa = this.funcaoAtoa.bind(this);
   }
+
+  // const teste = dinheiro.reduce((acc, curr) => {
+  //   curr.code
+  //     // const curr.code = {
+  //     //   code: curr.code,
+  //     //   name: curr.name,
+  //     //   ask: curr.ask,
+  //     // };
+  //     return acc;
+  //   }, []);
+  //   console.log(teste);
+
+  // componentDidMount() {
+  //   const { saveApi } = this.props;
+  //   saveApi();
+  // }
+
+  // componentDidUpdate() {
+  //   this.funcaoAtoa();
+  // }
+
+  // funcaoAtoa() {
+  //   const { dinheiro } = this.props;
+  //   console.log(dinheiro.map((element) => {
+  //   }));
+  // }
+
+  searchState(chave, valor) {
+    this.setState({ [chave]: valor });
+  }
+
+  // addId() {
+  //   const { id } = this.state;
+  //   // this.setState((prevState) => ({ prevState, id: id + 1 }));
+  //   this.setState({ id: id + 1 });
+  // }
 
   valueExpense() {
     return (
@@ -21,6 +68,9 @@ class Form extends React.Component {
           <input
             id="value-expense"
             type="text"
+            onChange={ (event) => {
+              this.searchState('value', event.target.value);
+            } }
           />
         </label>
       </div>
@@ -35,6 +85,9 @@ class Form extends React.Component {
           <input
             id="value-Description"
             type="text"
+            onChange={ (event) => {
+              this.searchState('description', event.target.value);
+            } }
           />
         </label>
       </div>
@@ -43,13 +96,15 @@ class Form extends React.Component {
 
   currencySelect() {
     const { dinheiro } = this.props;
-    console.log(dinheiro);
     return (
       <div>
         <label htmlFor="currency">
           Moeda
           <select
             id="currency"
+            onChange={ (event) => {
+              this.searchState('currency', event.target.value);
+            } }
           >
             {dinheiro.map((moeda, index) => (
               <option value={ moeda.code } key={ index }>
@@ -69,6 +124,9 @@ class Form extends React.Component {
           Método de pagamento
           <select
             id="pay-method"
+            onChange={ (event) => {
+              this.searchState('method', event.target.value);
+            } }
           >
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
@@ -86,6 +144,9 @@ class Form extends React.Component {
           Tag
           <select
             id="pay-method"
+            onChange={ (event) => {
+              this.searchState('tag', event.target.value);
+            } }
           >
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
@@ -94,6 +155,20 @@ class Form extends React.Component {
             <option value="Saúde">Saúde</option>
           </select>
         </label>
+      </div>
+    );
+  }
+
+  saveExpenseBtn() {
+    const { saveExpensesRedux } = this.props;
+    return (
+      <div>
+        <button
+          type="button"
+          onClick={ () => saveExpensesRedux(this.state) }
+        >
+          Enviar Despesas
+        </button>
       </div>
     );
   }
@@ -108,11 +183,17 @@ class Form extends React.Component {
           {this.currencySelect()}
           {this.payMethodSelect()}
           {this.tagExpense()}
+          {this.saveExpenseBtn()}
         </form>
       </div>
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  saveApi: () => dispatch(getCurrencyAPI()),
+  saveExpensesRedux: (param) => dispatch(saveExpenses(param)),
+});
 
 const mapStateToProps = (state) => ({
   dinheiro: state.wallet.currencies,
@@ -122,4 +203,4 @@ Form.propTypes = {
   dinheiro: PropTypes.arrayOf,
 }.isRequired;
 
-export default connect(mapStateToProps)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

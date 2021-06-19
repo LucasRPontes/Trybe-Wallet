@@ -4,14 +4,15 @@ import PropTypes from 'prop-types';
 
 class Header extends React.Component {
   render() {
-    const { email } = this.props;
+    const { email, despesas } = this.props;
+    const soma = despesas.reduce((acc, curr) => acc + parseFloat(curr.value), 0);
     return (
       <header>
         <div data-testid="email-field">
           { email }
         </div>
         <div data-testid="total-field">
-          0
+          { soma }
         </div>
         <div data-testid="header-currency-field">
           BRL
@@ -23,6 +24,7 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  despesas: state.wallet.expenses,
 });
 
 Header.propTypes = {
