@@ -10,10 +10,10 @@ class Form extends React.Component {
     this.state = {
       id: -1,
       value: 0,
-      description: '',
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
+      description: '',
     };
 
     this.valueExpense = this.valueExpense.bind(this);
@@ -21,50 +21,17 @@ class Form extends React.Component {
     this.currencySelect = this.currencySelect.bind(this);
     this.payMethodSelect = this.payMethodSelect.bind(this);
     this.tagExpense = this.tagExpense.bind(this);
-    // this.funcaoAtoa = this.funcaoAtoa.bind(this);
   }
-
-  // const teste = dinheiro.reduce((acc, curr) => {
-  //   curr.code
-  //     // const curr.code = {
-  //     //   code: curr.code,
-  //     //   name: curr.name,
-  //     //   ask: curr.ask,
-  //     // };
-  //     return acc;
-  //   }, []);
-  //   console.log(teste);
-
-  // componentDidMount() {
-  //   const { saveApi } = this.props;
-  //   saveApi();
-  // }
-
-  // componentDidUpdate() {
-  //   this.funcaoAtoa();
-  // }
-
-  // funcaoAtoa() {
-  //   const { dinheiro } = this.props;
-  //   console.log(dinheiro.map((element) => {
-  //   }));
-  // }
 
   searchState(chave, valor) {
     this.setState({ [chave]: valor });
   }
 
-  // addId() {
-  //   const { id } = this.state;
-  //   // this.setState((prevState) => ({ prevState, id: id + 1 }));
-  //   this.setState({ id: id + 1 });
-  // }
-
   valueExpense() {
     return (
       <div>
         <label htmlFor="value-expense">
-          Valor despesa
+          Valor
           <input
             id="value-expense"
             type="text"
@@ -81,7 +48,7 @@ class Form extends React.Component {
     return (
       <div>
         <label htmlFor="value-Description">
-          Descrição despesa
+          descrição
           <input
             id="value-Description"
             type="text"
@@ -99,7 +66,7 @@ class Form extends React.Component {
     return (
       <div>
         <label htmlFor="currency">
-          Moeda
+          moeda
           <select
             id="currency"
             onChange={ (event) => {
@@ -121,7 +88,7 @@ class Form extends React.Component {
     return (
       <div>
         <label htmlFor="pay-method">
-          Método de pagamento
+          método de pagamento
           <select
             id="pay-method"
             onChange={ (event) => {
@@ -141,7 +108,7 @@ class Form extends React.Component {
     return (
       <div>
         <label htmlFor="pay-method">
-          Tag
+          tag
           <select
             id="pay-method"
             onChange={ (event) => {
@@ -167,25 +134,23 @@ class Form extends React.Component {
           type="button"
           onClick={ () => saveExpensesRedux(this.state) }
         >
-          Enviar Despesas
+          Adicionar despesa
         </button>
       </div>
     );
   }
 
   render() {
-    // const { currency } = this.props;
     return (
-      <div>
-        <form>
-          {this.valueExpense()}
-          {this.valueDescription()}
-          {this.currencySelect()}
-          {this.payMethodSelect()}
-          {this.tagExpense()}
-          {this.saveExpenseBtn()}
-        </form>
-      </div>
+
+      <form>
+        {this.valueExpense()}
+        {this.valueDescription()}
+        {this.currencySelect()}
+        {this.payMethodSelect()}
+        {this.tagExpense()}
+        {this.saveExpenseBtn()}
+      </form>
     );
   }
 }
