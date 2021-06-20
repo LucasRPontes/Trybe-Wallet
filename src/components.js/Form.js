@@ -107,10 +107,10 @@ class Form extends React.Component {
   tagExpense() {
     return (
       <div>
-        <label htmlFor="pay-method">
+        <label htmlFor="tag">
           tag
           <select
-            id="pay-method"
+            id="tag"
             onChange={ (event) => {
               this.searchState('tag', event.target.value);
             } }
