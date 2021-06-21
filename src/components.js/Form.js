@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCurrencyAPI, saveExpenses } from '../actions';
+import { saveExpenses } from '../actions';
 
 class Form extends React.Component {
   constructor() {
@@ -21,6 +21,8 @@ class Form extends React.Component {
     this.currencySelect = this.currencySelect.bind(this);
     this.payMethodSelect = this.payMethodSelect.bind(this);
     this.tagExpense = this.tagExpense.bind(this);
+    this.saveExpenseBtn = this.saveExpenseBtn.bind(this);
+    this.searchState = this.searchState.bind(this);
   }
 
   searchState(chave, valor) {
@@ -156,7 +158,6 @@ class Form extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  saveApi: () => dispatch(getCurrencyAPI()),
   saveExpensesRedux: (param) => dispatch(saveExpenses(param)),
 });
 
@@ -166,6 +167,7 @@ const mapStateToProps = (state) => ({
 
 Form.propTypes = {
   dinheiro: PropTypes.arrayOf,
+  saveExpensesRedux: PropTypes.func,
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
