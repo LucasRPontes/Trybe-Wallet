@@ -21,6 +21,13 @@ export const saveStateComponent = (expense) => ({
   },
 });
 
+export const deleteExpense = (newExpense) => ({
+  type: 'DELETE_EXPENSE',
+  payload: {
+    newExpense,
+  },
+});
+
 export const getCurrencyAPI = () => async (dispatch) => {
   const response = await fetchApi();
   const currency = Object.values(response).filter((element) => element.codein !== 'BRLT');

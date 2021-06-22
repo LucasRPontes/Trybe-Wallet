@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { deleteExpense } from '../actions';
 
 class Table extends React.Component {
   constructor() {
     super();
 
     this.convertedValue = this.convertedValue.bind(this);
+    this.deleteExpenseButton = this.deleteExpenseButton.bind(this);
   }
 
   // Função tirada do código do Jonathan
@@ -15,8 +17,15 @@ class Table extends React.Component {
     return parseFloat(converted).toFixed(2);
   }
 
-  render() {
+  deleteExpenseButton(id) {
     const { despesas } = this.props;
+    const result = despesas.filter((element) => element.id !== id);
+    console.log(result);
+    return result;
+  }
+
+  render() {
+    const { despesas, deleteExpenseRdx } = this.props;
     return (
       <table>
         <thead>
@@ -40,19 +49,20 @@ class Table extends React.Component {
               <td>{ despesa.method }</td>
               <td>{ despesa.value }</td>
               <td>
-                { despesas.length > 0 && despesa.exchangeRates[despesa.currency].name
+                { despesa.exchangeRates[despesa.currency].name
                   .replace('/Real Brasileiro', '') }
               </td>
               <td>{ despesa.currency }</td>
               <td>
-                { despesas.length > 0
-                  && this.convertedValue(despesa.value,
-                    despesa.exchangeRates[despesa.currency].ask) }
+                { this.convertedValue(despesa.value,
+                  despesa.exchangeRates[despesa.currency].ask) }
               </td>
               <td>Real</td>
               <td>
                 <button
                   type="button"
+                  data-testid="delete-btn"
+                  onClick={ () => deleteExpenseRdx(this.deleteExpenseButton(despesa.id)) }
                 >
                   Excluir
                 </button>
@@ -65,6 +75,10 @@ class Table extends React.Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  deleteExpenseRdx: (param) => dispatch(deleteExpense(param)),
+});
+
 const mapStateToProps = (state) => ({
   despesas: state.wallet.expenses,
 });
@@ -73,4 +87,4 @@ Table.propTypes = {
   despesas: PropTypes.arrayOf,
 }.isRequired;
 
-export default connect(mapStateToProps, null)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
