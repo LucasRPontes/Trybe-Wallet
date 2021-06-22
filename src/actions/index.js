@@ -36,9 +36,8 @@ export const getCurrencyAPI = () => async (dispatch) => {
 
 export const saveExpenses = (stateComponent) => async (dispatch) => {
   const response = await fetchApi();
-  const currency = Object.values(response).filter((element) => element.codein !== 'BRLT');
-  const rslt = currency.reduce((acc, curr) => { acc[curr.code] = curr; return acc; }, {});
-  stateComponent.exchangeRates = rslt;
-  stateComponent.id += 1;
+  stateComponent.exchangeRates = response;
   return dispatch(saveStateComponent(stateComponent));
 };
+// Exemplo de reduce criando objeto
+// currency.reduce((acc, curr) => { acc[curr.code] = curr; return acc; }, {});

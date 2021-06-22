@@ -8,7 +8,7 @@ class Form extends React.Component {
     super();
 
     this.state = {
-      id: -1,
+      id: 0,
       value: 0,
       currency: 'USD',
       method: 'Dinheiro',
@@ -134,7 +134,10 @@ class Form extends React.Component {
       <div>
         <button
           type="button"
-          onClick={ () => saveExpensesRedux(this.state) }
+          onClick={ () => {
+            saveExpensesRedux({ ...this.state });
+            this.setState((prevState) => { prevState.id += 1; });
+          } }
         >
           Adicionar despesa
         </button>
