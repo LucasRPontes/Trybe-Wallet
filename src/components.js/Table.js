@@ -20,7 +20,6 @@ class Table extends React.Component {
   deleteExpenseButton(id) {
     const { despesas } = this.props;
     const result = despesas.filter((element) => element.id !== id);
-    console.log(result);
     return result;
   }
 
@@ -42,27 +41,28 @@ class Table extends React.Component {
           </tr>
         </thead>
         <tbody>
-          { despesas.map((despesa, index) => (
+          { despesas.map((desp, index) => (
             <tr key={ index }>
-              <td>{ despesa.description }</td>
-              <td>{ despesa.tag }</td>
-              <td>{ despesa.method }</td>
-              <td>{ despesa.value }</td>
+              <td>{ desp.description }</td>
+              <td>{ desp.tag }</td>
+              <td>{ desp.method }</td>
+              <td>{ desp.value }</td>
               <td>
-                { despesa.exchangeRates[despesa.currency].name
-                  .replace('/Real Brasileiro', '') }
+                {desp.exchangeRates[desp.currency].name.replace('/Real Brasileiro', '')}
               </td>
-              <td>{ despesa.currency }</td>
               <td>
-                { this.convertedValue(despesa.value,
-                  despesa.exchangeRates[despesa.currency].ask) }
+                { this.convertedValue(1, desp.exchangeRates[desp.currency].ask) }
+              </td>
+              <td>
+                { this.convertedValue(desp.value,
+                  desp.exchangeRates[desp.currency].ask) }
               </td>
               <td>Real</td>
               <td>
                 <button
                   type="button"
                   data-testid="delete-btn"
-                  onClick={ () => deleteExpenseRdx(this.deleteExpenseButton(despesa.id)) }
+                  onClick={ () => deleteExpenseRdx(this.deleteExpenseButton(desp.id)) }
                 >
                   Excluir
                 </button>

@@ -3,23 +3,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Header extends React.Component {
-  constructor() {
-    super();
-
-    this.convertedValue = this.convertedValue.bind(this);
-  }
-
-  convertedValue(value, exchangeRates) {
-    const converted = value * exchangeRates;
-    return parseFloat(converted).toFixed(2);
-  }
-
   render() {
     const { email, despesas } = this.props;
 
     const soma = despesas
-      .reduce((acc, curr) => acc + parseFloat(this.convertedValue(curr.value,
-        curr.exchangeRates[curr.currency].ask)), 0);
+      .reduce((acc, curr) => {
+        const result = acc + (curr.exchangeRates[curr.currency].ask * curr.value);
+        return parseFloat(result.toFixed(2));
+      }, 0);
 
     return (
       <header>
