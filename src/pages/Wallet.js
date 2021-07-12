@@ -12,13 +12,6 @@ class Wallet extends React.Component {
     saveApi();
   }
 
-  deleteExpenseButton(id) {
-    const { despesas } = this.props;
-    const result = despesas.filter((element) => element.id !== id);
-    console.log(result);
-    return result;
-  }
-
   render() {
     return (
       <div>

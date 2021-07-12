@@ -28,6 +28,14 @@ export const deleteExpense = (newExpense) => ({
   },
 });
 
+export const handleChangeState = (chave, valor) => ({
+  type: 'HANDLE_CHANGE',
+  payload: {
+    chave,
+    valor,
+  },
+});
+
 export const getCurrencyAPI = () => async (dispatch) => {
   const response = await fetchApi();
   const currency = Object.values(response).filter((element) => element.codein !== 'BRLT');
