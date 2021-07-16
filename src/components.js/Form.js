@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { saveExpenses, handleChangeState } from '../actions';
+import { saveExpenses, handleChangeState, deleteExpense } from '../actions';
 
 class Form extends React.Component {
   constructor() {
@@ -13,6 +13,8 @@ class Form extends React.Component {
     this.payMethodSelect = this.payMethodSelect.bind(this);
     this.tagExpense = this.tagExpense.bind(this);
     this.saveExpenseBtn = this.saveExpenseBtn.bind(this);
+    this.editExpenseBtn = this.editExpenseBtn.bind(this);
+    this.editExpenseFunction = this.editExpenseFunction.bind(this);
   }
 
   valueExpense() {
@@ -124,14 +126,15 @@ class Form extends React.Component {
   }
 
   saveExpenseBtn() {
-    const { saveExpensesRedux, handleChange, state } = this.props;
+    const { saveExpensesRedux, handleChange, state, expenses } = this.props;
     return (
       <div>
         <button
           type="button"
           onClick={ () => {
             saveExpensesRedux({ ...state });
-            handleChange('id', state.id + 1);
+            handleChange('id', expenses.length + 1);
+            console.log(expenses[expenses.length - 1]);
           } }
         >
           Adicionar despesa
@@ -140,7 +143,36 @@ class Form extends React.Component {
     );
   }
 
+  editExpenseFunction() {
+    const { state, expenses, editExpenseRdx } = this.props;
+    const expenseEdit = expenses.map((expenseObj) => {
+      if (expenseObj.id !== state.id) {
+        return expenseObj;
+      }
+      return { ...state, editButton: false };
+    });
+    return editExpenseRdx(expenseEdit);
+  }
+
+  editExpenseBtn() {
+    const { handleChange, expenses } = this.props;
+    return (
+      <div>
+        <button
+          type="button"
+          onClick={ () => {
+            this.editExpenseFunction();
+            handleChange('id', expenses.length + 1);
+          } }
+        >
+          Editar despesa
+        </button>
+      </div>
+    );
+  }
+
   render() {
+    const { state } = this.props;
     return (
 
       <form>
@@ -149,7 +181,7 @@ class Form extends React.Component {
         {this.currencySelect()}
         {this.payMethodSelect()}
         {this.tagExpense()}
-        {this.saveExpenseBtn()}
+        { state.editButton ? this.editExpenseBtn() : this.saveExpenseBtn() }
       </form>
     );
   }
@@ -158,10 +190,12 @@ class Form extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   saveExpensesRedux: (param) => dispatch(saveExpenses(param)),
   handleChange: (chave, valor) => dispatch(handleChangeState(chave, valor)),
+  editExpenseRdx: (param) => dispatch(deleteExpense(param)),
 });
 
 const mapStateToProps = (state) => ({
   dinheiro: state.wallet.currencies,
+  expenses: state.wallet.expenses,
   state: state.stateForms,
 });
 

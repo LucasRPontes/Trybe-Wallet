@@ -36,6 +36,13 @@ export const handleChangeState = (chave, valor) => ({
   },
 });
 
+export const changeState = (editState) => ({
+  type: 'CHANGE_STATE',
+  payload: {
+    editState,
+  },
+});
+
 export const getCurrencyAPI = () => async (dispatch) => {
   const response = await fetchApi();
   const currency = Object.values(response).filter((element) => element.codein !== 'BRLT');

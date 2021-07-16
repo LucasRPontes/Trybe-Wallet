@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   method: 'Dinheiro',
   tag: 'Alimentação',
   description: '',
+  editButton: false,
 };
 
 const stateForms = (state = INITIAL_STATE, action) => {
@@ -16,7 +17,7 @@ const stateForms = (state = INITIAL_STATE, action) => {
     };
   case 'CHANGE_STATE':
     return {
-      state: action.payload.valor,
+      ...action.payload.editState,
     };
   default:
     return state;

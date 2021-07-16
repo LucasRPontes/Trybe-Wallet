@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteExpense } from '../actions';
+import { deleteExpense, changeState } from '../actions';
 
 class Table extends React.Component {
   constructor() {
@@ -9,6 +9,7 @@ class Table extends React.Component {
 
     this.convertedValue = this.convertedValue.bind(this);
     this.deleteExpenseButton = this.deleteExpenseButton.bind(this);
+    this.buttonEditExpense = this.buttonEditExpense.bind(this);
   }
 
   // Função tirada do código do Jonathan
@@ -21,6 +22,20 @@ class Table extends React.Component {
     const { despesas } = this.props;
     const result = despesas.filter((element) => element.id !== id);
     return result;
+  }
+
+  buttonEditExpense(id) {
+    const { despesas, editarEstado } = this.props;
+    const result = despesas.filter((element) => element.id === id);
+    return (
+      <button
+        type="button"
+        data-testid="edit-btn"
+        onClick={ () => editarEstado({ ...result[0], editButton: true }) }
+      >
+        Editar despesa
+      </button>
+    );
   }
 
   render() {
@@ -50,9 +65,7 @@ class Table extends React.Component {
               <td>
                 {desp.exchangeRates[desp.currency].name.replace('/Real Brasileiro', '')}
               </td>
-              <td>
-                { this.convertedValue(1, desp.exchangeRates[desp.currency].ask) }
-              </td>
+              <td>{this.convertedValue(1, desp.exchangeRates[desp.currency].ask)}</td>
               <td>
                 { this.convertedValue(desp.value,
                   desp.exchangeRates[desp.currency].ask) }
@@ -66,6 +79,7 @@ class Table extends React.Component {
                 >
                   Excluir
                 </button>
+                { this.buttonEditExpense(desp.id) }
               </td>
             </tr>
           )) }
@@ -77,6 +91,7 @@ class Table extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   deleteExpenseRdx: (param) => dispatch(deleteExpense(param)),
+  editarEstado: (edit) => dispatch(changeState(edit)),
 });
 
 const mapStateToProps = (state) => ({
