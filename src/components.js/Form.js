@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { saveExpenses, handleChangeState, deleteExpense } from '../actions';
+import { saveExpenses, handleChangeState, deleteExpense, changeState } from '../actions';
 
 class Form extends React.Component {
   constructor() {
@@ -15,6 +15,14 @@ class Form extends React.Component {
     this.saveExpenseBtn = this.saveExpenseBtn.bind(this);
     this.editExpenseBtn = this.editExpenseBtn.bind(this);
     this.editExpenseFunction = this.editExpenseFunction.bind(this);
+    this.idNumber = this.idNumber.bind(this);
+  }
+
+  idNumber() {
+    const { expenses } = this.props;
+    const verifyExpenses = expenses.length > 0 && expenses[expenses.length - 1].id + 1;
+    const number = verifyExpenses || 1;
+    return number;
   }
 
   valueExpense() {
@@ -126,15 +134,21 @@ class Form extends React.Component {
   }
 
   saveExpenseBtn() {
-    const { saveExpensesRedux, handleChange, state, expenses } = this.props;
+    const { saveExpensesRedux, handleChange, state, resetState } = this.props;
     return (
       <div>
         <button
           type="button"
-          onClick={ () => {
-            saveExpensesRedux({ ...state });
-            handleChange('id', expenses.length + 1);
-            console.log(expenses[expenses.length - 1]);
+          onClick={ async () => {
+            await saveExpensesRedux({ ...state });
+            resetState({ ...state,
+              value: 0,
+              currency: 'USD',
+              method: 'Dinheiro',
+              tag: 'Alimentação',
+              description: '',
+            });
+            handleChange('id', this.idNumber());
           } }
         >
           Adicionar despesa
@@ -149,20 +163,28 @@ class Form extends React.Component {
       if (expenseObj.id !== state.id) {
         return expenseObj;
       }
-      return { ...state, editButton: false };
+      return { ...state };
     });
     return editExpenseRdx(expenseEdit);
   }
 
   editExpenseBtn() {
-    const { handleChange, expenses } = this.props;
+    const { handleChange, state, resetState } = this.props;
     return (
       <div>
         <button
           type="button"
           onClick={ () => {
             this.editExpenseFunction();
-            handleChange('id', expenses.length + 1);
+            resetState({ ...state,
+              value: 0,
+              currency: 'USD',
+              method: 'Dinheiro',
+              tag: 'Alimentação',
+              description: '',
+              editButton: false,
+            });
+            handleChange('id', this.idNumber());
           } }
         >
           Editar despesa
@@ -191,6 +213,7 @@ const mapDispatchToProps = (dispatch) => ({
   saveExpensesRedux: (param) => dispatch(saveExpenses(param)),
   handleChange: (chave, valor) => dispatch(handleChangeState(chave, valor)),
   editExpenseRdx: (param) => dispatch(deleteExpense(param)),
+  resetState: (edit) => dispatch(changeState(edit)),
 });
 
 const mapStateToProps = (state) => ({
