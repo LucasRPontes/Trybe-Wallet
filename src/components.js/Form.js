@@ -21,7 +21,7 @@ class Form extends React.Component {
   idNumber() {
     const { expenses } = this.props;
     const verifyExpenses = expenses.length > 0 && expenses[expenses.length - 1].id + 1;
-    const number = verifyExpenses || 1;
+    const number = verifyExpenses;
     return number;
   }
 
